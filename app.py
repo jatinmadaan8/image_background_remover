@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, send_file
 from werkzeug.utils import secure_filename
 from PIL import Image
 from rembg import remove
@@ -21,13 +21,13 @@ def allowed_file(filename):
 def remove_background():
     # Check if the request contains a file
     if 'file' not in request.files:
-        return jsonify({"error": "No file provided"}), 400
+        return {"error": "No file provided"}, 400
 
     file = request.files['file']
 
     # Check if the file is allowed
     if file.filename == '' or not allowed_file(file.filename):
-        return jsonify({"error": "Invalid file type"}), 400
+        return {"error": "Invalid file type"}, 400
 
     # Save the uploaded file
     filename = secure_filename(file.filename)
